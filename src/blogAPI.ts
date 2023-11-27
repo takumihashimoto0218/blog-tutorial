@@ -39,8 +39,7 @@ export const CreateArticle = async (
 	title: string,
 	content: string
 ): Promise<Article> => {
-
-  const currentDetetime = new Date().toISOString();
+	const currentDetetime = new Date().toISOString();
 
 	const res = await fetch(`http://localhost:3001/posts`, {
 		method: "POST",
@@ -58,4 +57,19 @@ export const CreateArticle = async (
 
 	const newArticle = await res.json();
 	return newArticle;
+};
+
+export const deleteArticle = async (id: string): Promise<Article> => {
+	const res = await fetch(`http://localhost:3001/posts/${id}`, {
+		method: "DELETE",
+	});
+
+	if (!res.ok) {
+		throw new Error("エラーが発生しました。");
+	}
+
+	await new Promise((resolve) => setTimeout(resolve, 1000));
+
+	const deleteArticle = await res.json();
+	return deleteArticle;
 };
